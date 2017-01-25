@@ -1,0 +1,13 @@
+var gaconfig = {
+  type: "service_account",
+  project_id: "titanium-campus-155822",
+  private_key_id: "b6205078bf9e80077baed2c63787af16fd4e9423",
+  private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDFluRLlOuaGjXD\n7vFZtHCa95qWAyjEm1AkLgvnZN5GwinsMuo5QTKXUsEIWVVIAMStInZ0VKftEhlY\nMNMFDe3uZI3UlbizgaFM/cMbmy0BVTh9StL4HzhiEE6DCUFbGcdcFfgL+wEe7Urj\nJ5Zz2tB/Z99EhXZ/s52p08lp6YxujBfM8NylLMcpRVIrtaqJA6zNssm+A8bHgj31\nC/+PGh+8xq3HPp8rdDgcrzoX+p7hiawdXAkUkQn0ehJPvxA3BHzQ81JtRert2mCg\nPGIOJylF9iW7XDWUpvGqzqtVxAzf4eKDRWINTNqNkQWV+T/z0oHS3GyrU04/Sb1A\n4824D7MvAgMBAAECggEBAJ/IPsNUIRYUHehdIHUfMnROyIaI9X3P7wXi6qNrcUgd\nGZO1NK2qKIQwWoMq4okAfgtYNBwsnUNcAHzNtsd+lSrTy9HeZWdb65l8GDwJx2It\njSncyS/25zx93U+fu2c1OH8iEN13VFezIn0A9WyoxTRSRj1+A+6OzG+aIWVxhKub\nVmqys0Mm91SfbnYBjyzv33micUalTT4UXEr5PHNmUXa7pTffhWQZpvfTuN380KXL\nxJwtIyUsJ8qbkyu7SvOMD9kb1fibetlgQUrIJGwn13pclVQoUUcKfxpPxFdrwDar\nmRv7ymMIOVJnV+ZIp1nhRMb0lZJmlx5j9NCUBtK7+4ECgYEA+xYi98U3Yn/HRoBq\nbiS1gPyQeXsQPz6yZmBNtdk8TazjPGwgJZsCzVRMDAgaYSdZxh2n5OmhCAdKp9jK\n0jQ6ks/g/njJGRFimIK1KtplFiGce4Tza/T8LxiKA5qiuJzFbvl86b2THNy6b/cF\nfSVbFO/IlNAy714lmjYMdDoLSm8CgYEAyXTAgRLImRbNUp3omNR5KQg50ajWYgnd\nSwv5038L876gA72W2oD3TX5MnkofiVNudyeNJy9trBNqo28D8Bxdr4fWkyKlMgWb\nwrW6p3wd/ZZlrMddERkrMk5Cv7QinuLMJpnDQszoqs4zCvlVEUtK1QkYqVQ67Q32\ncJGVN/cVg0ECgYEApGumkmHPFu1d7UkCaQYY5VJ+uU5hIUlJQckmmkKbPrJMS7Dy\njC2p9BOTiP11aNF/9EBPRZPII53CwY8xod0ZzjHawEkQRx4fVoehY2KId6mi8y/o\nx3Ux/xUuq5WDoSjoEPfHWLkPsQLKA6/bJExmDJvI2cpM0HryXL2wAhxQcHkCgYB5\nNHtVrP1vzd4+pK76tGspGr/eupwxZAn2SwBGFRwVzEztszV9xTYFM8XZPnN25fGC\nUxODze9IJm50YiiWYBqlry6UW7XUQLeUEE560hwhJEmMCG6gCOqKW7ehKznhKkb1\nunFWUX5ytZjUM2rQ+uHNBqoFxp2lXk81LwH+J/STgQKBgEV9XsH0rQaJ9wFN98Kj\nOaVK3gS1vK3ng4kDtXa1JnkSBJHpztAO2aEUeqELQrdFDw6+lf5cEDSXY6atyhoD\n6nNNEVshFV2aFQ6f1CBJEjrrnyUtJjxtKNfBLxCz04V4iWs5d6/qTcOxVdnaHzfC\nlTWVlqhAfqxVYKigVb5Uwp0V\n-----END PRIVATE KEY-----\n",
+  client_email: "launchgearmain@titanium-campus-155822.iam.gserviceaccount.com",
+  client_id: "104624013382866812732",
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://accounts.google.com/o/oauth2/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/launchgearmain%40titanium-campus-155822.iam.gserviceaccount.com"
+};
+module.exports = config;

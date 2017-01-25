@@ -1,0 +1,7 @@
+extends layout
+
+block content
+
+	each onboard, i in domainlist
+		h1 Welcome #{onboard.teamName}! Your New Landing Page is Here:		
+		a(href="http://launchgear.io/#{onboard.domainName}")= onboard.domainName

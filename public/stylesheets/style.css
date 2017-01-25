@@ -1,0 +1,73 @@
+input[type=text]{
+  border-radius:8px;
+}
+
+input[type=email]{
+  border-radius:8px;
+}
+
+button{
+  border-radius:8px;
+}
+
+body {
+  padding: 30px;
+  font: 16px "Segoe UI", Helvetica, Arial, sans-serif;
+  background-image: url(/images/manyclimbersacc.jpg);
+}
+
+h2 {
+	margin:0 0 .5em 0;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#wrapper {
+	padding-left:312px;
+	position:relative;
+}
+
+#domainlist {
+	width:250px;
+	position:absolute;
+	top:0; left:0;
+}
+	#domainlist table {
+		border-collapse:separate;
+		border-spacing:1px;
+		background:#CCC;
+	}
+		#domainlist table th {
+			background:#EEE;
+			font-weight:600;
+			padding:10px 20px;
+			text-align:center;
+		}
+		#domainlist table tbody {
+			padding:0; margin:0;
+			border-collapse:collapse;
+			border-spacing:0px;
+		}
+			#domainlist table td {
+				background:#FFF;
+				padding:5px 10px;
+				text-align:center;
+			}
+
+#domainInfo {
+	width:250px;
+	position:absolute;
+	top:0; left:0;
+}
+	#domainInfo p {
+		padding:15px;
+		border:1px solid #CCC;
+		background:rgba(80,120,255,0.05);
+	}
+
+fieldset {
+	border:0;
+	padding:0; margin:0;
+}

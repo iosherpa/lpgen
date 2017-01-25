@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	h1= title
+	form#formAddDomain(name="adddomain",method="post",action="/adddomain")
+		input#inputTeamName(type="text", placeholder="teamName" name="teamName" required)
+		input#inputDomainName(type="text", placeholder="domainName" name="domainName" required)
+		input#inputGmailGA(type="email", placeholder="gmail address for analytics" name="gmailGA" required)
+		button#btnSubmit(type="submit") submit
