@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var Promise = require('promise');
 
 var gaNew = '';
 var mcNew = '';
@@ -20,14 +21,27 @@ router.get('/domainlist', function(req, res) {
  */
 router.post('/adddomain', function(req, res) {
 
-	console.log('in post');	
+	console.log('in post');		
+
+	//check whether the subdomain is already in use	
+	/* 
+    var db = req.db;
+    var collection = db.get('onboard');	
+	var dbCursor = collection.findOne({domainName: req.body.domainName});	
+	
+	if (dbCursor) {
+		console.log(dbCursor);			
+		res.send(dbCursor);
+	}
+	*/
+
 	
 	//add GA user and property
-	goGA(req, res);
+	//goGA(req, res);
 	console.log('after GA');
 
 	//add mailchimp list
-	goMC(req, res);
+	//goMC(req, res);
 	console.log('after mc');
 	
 	//insert team record into db
@@ -36,13 +50,19 @@ router.post('/adddomain', function(req, res) {
     var collection = db.get('onboard');
 
     collection.insert(req.body, function(err, result){
-	  res.send(
-       (err === null) ? { msg: '' } : { msg: err }
-	  );
+	 if (err) {
+		 //console.log('err ' + err);
+		 res.send({ msg: err });
+	 } else {
+		//console.log('result ' + result); 
+		res.send({ result });
+	 }
+		
     });	 
 	
+	
 	//copy source directory either way, and if we have snippets, update them
-	copyFiles(req, res);
+	//copyFiles(req, res);
 	console.log('after copy files');		
 	
 });
@@ -71,12 +91,16 @@ function copyFiles(req, res) {
 	//var gaNew = 'Replacement GA snippet';
 	var mcOld = '5cf2245038';
 	//var mcNew = 'Replacement Mailchimp snippet';
-	var aboutOld = 'Our startup';
-	var aboutNew = req.body.aboutText;
-	var projOld = 'Coming Soon';
-	var projNew = req.body.projText;
+	var subtitleOld = 'Our startup';
+	var subtitleNew = req.body.pageSubtitle;
+	var feature1Old = 'Coming Soon';
+	var feature1New = req.body.feature1;
+	var feature2Old = 'Feature 2';
+	var feature2New = req.body.feature2;
+	var feature3Old = 'Feature 3';
+	var feature3New = req.body.feature3;	
 	var titleOld = 'Startup Landing Page';
-	var titleNew = req.body.teamName;
+	var titleNew = req.body.pageTitle;
 	var navOld = '<b>LaunchGear</b>.io</a>';
 	var navNew = '<b>'+titleNew+'</b></a>';
 	var mcHeaderOld = 'Sign up for launch updates';
@@ -92,7 +116,7 @@ function copyFiles(req, res) {
 
 	console.log('after s3 ', s3);
 	// Copy a folder from launcgear.io into a new folder under launchgear.io
-
+ 
 	 var done = function(err, data) {
 	  if (err) console.log(err);
 	  //else 
@@ -100,7 +124,7 @@ function copyFiles(req, res) {
 	  //getModObject();
 		
 	};
-
+	 
 	s3.listObjects({Prefix: oldPrefix}, function(err, data){
 	  if (data.Contents.length) {
 	  //console.log('data contents '+ data.Contents);
@@ -115,6 +139,7 @@ function copyFiles(req, res) {
 		// if this is the main index.html file update it and then write
 		  if (params.Key === newPrefix+srcFile) {
 			getModObject();
+			//createS3User();
 		  } else { 
 		    s3.copyObject(params, function(copyErr, copyData){
 		     if (copyErr) {
@@ -156,15 +181,25 @@ function getModObject() {
 		   newBody = newBody.replace(mcOld, mcNew);
 		};
 		
-		//replace about text
-		if (aboutNew !== '') {		
-		   newBody = newBody.replace(aboutOld, aboutNew);
+		//replace subtitle text
+		if (subtitleNew !== '') {		
+		   newBody = newBody.replace(subtitleOld, subtitleNew);
 		};
 		
-		//replace project text
-		if (projNew !== '') {		
-		   newBody = newBody.replace(projOld, projNew);
+		//replace feature text
+		if (feature1New !== '') {		
+		   newBody = newBody.replace(feature1Old, feature1New);
 		};
+		
+ 		//replace feature text
+		if (feature2New !== '') {		
+		   newBody = newBody.replace(feature2Old, feature2New);
+		};
+		
+		//replace feature text
+		if (feature3New !== '') {		
+		   newBody = newBody.replace(feature3Old, feature3New);
+		}; 		
 		
 		//replace mc header text
 		if (mcHeaderNew !== '') {		
@@ -193,7 +228,30 @@ function getModObject() {
 
 	 });
 
-	}  
+	}
+
+// create an aws user
+function createS3User() {
+
+	console.log('in create user');
+	var userName = req.body.sapmail;
+	var userParams = {
+	  UserName: userName
+	  //, Path: 
+	};
+
+	var iam = new AWS.IAM();
+		console.log('in create user 2');
+	iam.createUser(userParams, function(err, data) {
+	  if (err) {
+	    console.log(err, err.stack);
+	  } else {
+		console.log('AWS user created');
+	  }
+	  	console.log('in create user3');
+	});
+
+   } 	
 }	
 
 function goMC(req, res) {
@@ -247,7 +305,6 @@ function goGA(req, res) {
 
 	//ga requirements
 	var fs = require('fs-extra');
-	var Promise = require('promise');
 	var google = require('googleapis');
 	var analytics = google.analytics('v3');
 	var serviceAccountInfoPath = './gaconfig.json';

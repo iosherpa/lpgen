@@ -1,0 +1,52 @@
+extends layout
+
+block content
+	center
+	h1 SAP.io Accelerate
+	p Welcome to the Landing Page Generator
+	h2 LaunchGear.io Team List
+		
+	// Wrapper
+	#wrapper
+	
+		// DOMAIN LIST
+		#domainlist
+			table
+				thead
+					th TeamName
+					th DomainName
+				tbody
+		// /DOMAIN LIST
+		// ADD TEAM
+		h2 Add A Team and Subdomain
+		#addDomain
+			fieldset
+				p Team Name*
+				input#inputTeamName(name='team', type='text', placeholder=' To be used on your Landing Page', size='60')
+				p Domain Name* (launchgear.io subdomain for your landing page)
+				input#inputDomainName(name='domain', type='text', placeholder=' e.g. newstartup (alphanumeric only, max 20 chars)', size='60')
+				p Valid Google Account email address*, to be used for Google Analytics for your site				
+				input#inputGmailGA(name='gmail', type='email', placeholder=' Gmail account for Google Analytics', size='60')
+				br
+				p "Projects" text to be inserted for your site				
+				input#inputProjText(name='proj', type='text', placeholder=' Projects section text', rows='5', size='120')
+				br
+				p "About" text to be inserted for your site				
+				input#inputAboutText(name='about', type='text', placeholder=' About section text', rows='5', size='120')
+				br
+				p Mailchimp form header text to be inserted for your site				
+				input#inputMCText(name='mctext', type='text', placeholder=' Mailchimp section text', rows='5', size='120')
+				//br				
+				//p Upload a photo for the top section of your landing page (ideally 1500px width x 800px height)	
+				//<form action="/upload" method="POST" enctype="multipart/form-data">
+				//	Select an image to upload:
+				//	<input type="file" name="image">
+				//	<input type="submit" value="Upload Photo">
+				//</form>
+				//br
+				p * required
+				button#btnAddDomain Add Team
+		// /ADD TEAM
+	
+	// /WRAPPER
+

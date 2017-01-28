@@ -12,6 +12,8 @@ $(document).ready(function() {
 
 	// Add Team button click
     $('#btnAddDomain').on('click', addDomain);
+
+});
 	
 });
 
@@ -120,12 +122,13 @@ function addDomain(event) {
 			};
 		};
 		
-		// remove script from texts	
-/* 		if ((/<script([^'"]|"(\\.|[^"\\])*"|'(\\.|[^'\\])*')*?<\/script\s*>/.test($(this).val())) === true) {
+		// prohibit script in texts	
+ 		if ((/<(.|\n)*?>/.test($(this).val())) === true)
+			{
 				console.log('invalid text');
 				alertMsg += 'Script is not permitted: '+$(this).attr('name');
 				errorCount++; 					
-		}  */
+		}  
 		
 		
 		}

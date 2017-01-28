@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>LaunchGear Landing Page Generator</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- css -->	
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+</head>
+<body >
+<script>
+ function addTeam() {
+ 
+ 	var alertMsg = '';
+    var errorCount = 0;
+	
+	var team = document.getElementById("teamName").value;	
+	var domain = document.getElementById("domainName").value;
+	var gmail = document.getElementById("gmailGA").value;
+	var sapmail = document.getElementById("sapmail").value;	
+		
+	if ((team === '' ) || ( domain === '' ) || (gmail === '' ) || (sapmail === '' )) {
+	    alertMsg += 'Populate Team, Domain, and both email fields\n';
+	    errorCount++; 
+
+    } else {
+		//fields are populated, validate values	
+		
+		// validate subdomain - alphanumeric and hyphen and spaces, min 2 chars, max 20
+		if (/^[a-zA-Z0-9-_]{2,20}$/.test(domain) === false) {
+		//if ((/^[a-zA-Z0-9-_]+$/.test($(this).val())) === false) {
+			console.log('invalid domain');
+			alertMsg += 'Enter a vaild subdomain name (alphanumeric only, 2-20 chars)\n';				
+			errorCount++; 					
+		}
+		
+		// validate email	
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(gmail) === false) {
+			console.log('invalid email');
+			alertMsg += 'Enter a vaild Google Account email address\n';
+			errorCount++; 					
+		} 		
+		
+		// validate email	
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(sapmail) === false) {
+			console.log('invalid email');
+			alertMsg += 'Enter a vaild SAP email address\n';
+			errorCount++; 					
+		}  else {
+
+			// validate sap corporate email	
+			var emailSuffix = sapmail.split("@",2);
+			if (emailSuffix[1] !== "sap.com") {
+				console.log('invalid email');
+				alertMsg += 'Enter a vaild SAP email address\n';
+				errorCount++; 					
+			} 		
+		}
+		/*
+		// verify that another subdomain with this name does not already exist
+		// we lose the "this" context in the loop, save to variable
+		var dbDomain = $(this).val();
+		for(var i = 0; i < domainListData.length; i++) {
+			var dom = domainListData[i];
+			if (dom.domainName.toLowerCase() === dbDomain.toLowerCase()) {
+				console.log('duplicate domain');
+				alertMsg += 'This subdomain name is already in use, choose a different one\n';				
+				errorCount++; 
+			}
+		};
+		*/
+		
+		// prohibit script in texts	
+/*		if ((/<(.|\n)*?>/.test(team) === true) || (/<(.|\n)*?>/.test(domain) === true) || (/<(.|\n)*?>/.test(gmail) === true)) {
+			console.log('invalid text');
+			alertMsg += 'Script is not permitted: '+$(this).attr('name');
+			errorCount++; 					
+		}  
+
+*/	
+	  /*
+	  var elements = document.querySelectorAll("#teamForm input");
+	  var invText = 0;
+	  for (var i = 0; i < elements.length; i++) {
+		console.log(elements[i].value);
+		if (/<(.|\n)*?>/.test(elements[i].value) === true) {
+			console.log('invalid text');
+			invText++				
+		}
+
+	  }
+	  if invText !== 0) {
+		alertMsg += 'Only plain text is permitted\n';			
+		errorCount++;
+	  }	
+	  */
+	};
+	 
+    if (errorCount === 0) {
+        // If no validation errors, compile all domain info into one object
+        var newDomain = {
+            'teamName': team,			
+            'domainName': domain,
+            'sapmail': sapmail,
+            'gmailGA': gmail,
+            'pageTitle': document.getElementById("pageTitle").value,
+            'pageSubtitle': document.getElementById("pageSubtitle").value,
+            'feature1': document.getElementById("feature1").value,	
+            'feature2': document.getElementById("feature2").value,	
+            'feature3': document.getElementById("feature3").value,				
+            'mcHeadingText': document.getElementById("MCText").value			
+        }
+       
+	    var returnValue ='';
+        // Post the object to our adddomain service
+		$.ajax({
+            type: 'POST',
+            data: newDomain,
+            url: '/domains/adddomain',
+            dataType: 'JSON',
+		    async: false,
+			success: function (resp) {	
+				returnValue = resp;		
+				//$('#content').html(returnValue);
+			},
+			error: function (err) {
+				returnValue = err;
+			}
+		});
+		console.log('returnValue '+JSON.stringify(returnValue));
+		if (returnValue.msg) {
+			console.log(returnValue.msg);
+			alert('The team was not successfully added, contact an iO team member for help');
+		} else {
+		  console.log('newDomain.domain '+newDomain.domainName);
+		  
+			window.location.href = "http://ec2-54-202-120-184.us-west-2.compute.amazonaws.com/success.html"+"?domain="+newDomain.domainName;
+	
+		};	
+	
+	
+	} else {
+      // errorCount is more than 0, error out
+        alert(alertMsg);
+        //return false;	  
+	}
+	
+  }
+
+</script>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <ul class="w3-navbar w3-white w3-wide w3-padding-8 w3-card-2">
+    <li>
+      <a href="#home" class="w3-margin-left"><b>LaunchGear</b>.io</a>
+    </li>
+  </ul>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="height:20px" id="home">
+
+</header>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px">
+<p></p>
+<br>
+<h1>Generate a Landing Page for your Team
+</h1>
+<!--<div id='content'/>  -->
+  <div class="w3-container w3-padding-32" id="teamInfo">
+	<!--<form action="adddomain" method="post" id="teamForm" name="teamForm" >  -->
+	<form id="teamForm" name="teamForm" >  	
+	  <div class="team-field-group">
+
+		<p>* Team Name </p>
+		<input type="text" value="" name="team" id="teamName" size="40" required>
+		
+		<p>* Domain Name (launchgear.io subdomain for your landing page, alphanumeric only, max 20 chars)</p>
+		<input type="text" value="" name="domain" id="domainName" required>		
+		
+		<p>* Valid Google Account email address, to be used for Google Analytics for your site</p>
+		<input type="email" value="" name="gmail" id="gmailGA" size="40" required>
+				
+		<p>* SAP email address, to be used for landing page management</p>
+		<input type="email" value="" name="sapmail" id="sapmail" size="40" required>		
+
+		<p>Landing Page Title</p>
+		<input type="text" value="" name="title" id="pageTitle">	
+
+		<p>Landing Page Subtitle (value proposition)</p>
+		<input type="text" value="" name="subtitle" id="pageSubtitle">	
+		
+		<p>Feature 1</p>
+		<input type="text" value="" name="feature1" id="feature1" size="80">	
+		<p>Feature 2</p>
+		<input type="text" value="" name="feature2" id="feature2" size="80">	
+		<p>Feature 3</p>
+		<input type="text" value="" name="feature3" id="feature3" size="80">			
+		
+		<p>Mailchimp form header text to be inserted for your site</p>
+		<input type="text" value="" name="mctext" id="MCText">	
+		
+		<p>* required</p>
+
+		<input type="button" value="Generate Page" onclick="addTeam()"/>		
+		<!--<input type="submit" value="Generate Page" \>-->
+	  </div>	
+	</form>
+  </div>
+ 
+  
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+<a href="https://s3-us-west-2.amazonaws.com/launchgear.io/terms_and_privacy.html">By visiting this site, you are agreeing to its Terms of Use and acknowledging its Privacy Statement</a>
+  <p>Powered by LaunchGear.io</p>
+</footer>
+
+</body>
+</html>
